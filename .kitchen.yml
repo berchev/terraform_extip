@@ -1,0 +1,21 @@
+---
+driver:
+  name: terraform
+
+provisioner:
+  name: terraform
+
+platforms:
+  - name: ubuntu 
+
+verifier:
+  name: terraform
+  systems:
+    - name: default
+      backend: local
+      attrs_outputs:
+        an_attribute_name: external_ip 
+      controls:
+        - check_output
+suites:
+- name: default
