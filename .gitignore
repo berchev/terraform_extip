@@ -3,3 +3,6 @@
 terraform.tfstate
 terraform.tfstate.backup
 terraform.d/plugins/linux_amd64/*
+.kitchen/
+Gemfile.lock
+

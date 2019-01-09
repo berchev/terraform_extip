@@ -10,7 +10,7 @@ The purpose of this plugin is to print the external ip as an output.
 - `scripts/provision.sh` - script that install all needed software(Terraform and Go) and configure the Vagrant environment
 - `terraform.d/plugins/linux_amd64/` the directory where we should place our compiled plugin
 - `main.tf` - terraform configuration file
-
+- `test/integration/default/default_test.rb` - file contained kitchen test script
 
 ## Requrements
 - Vagrant: [install Vagrant](https://www.vagrantup.com/docs/installation/)
@@ -32,7 +32,7 @@ The purpose of this plugin is to print the external ip as an output.
 - Type `terraform init` in order to install all needed providers
 - Type `terraform apply` followed by `yes` keyword when you are prompted for response
 
-## Expected results
+## Terraform results
 ```
 Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 
@@ -43,5 +43,31 @@ external_ip = x.x.x.x
 
 Where **x.x.x.x** will be your external IP address
 
+## Test your code with **Kitchen**
+- Additional configuration for Kitchen is not needed. Vagrant box has Kitchen installed and configured
+- Log to your Vagrant machine: `vagrant ssh`
+- Change to /vagrant dir: `cd /vagrant`
+- Type: `bundle install` in order to install all needed Gems
+- Type: `bundle exec kitchen list` to list the environment
+- Type: `bundle exec kitchen converge` to build environment with kitchen
+- Type: `bundle exec kitchen verify` to test the created kitchen environment
+- Type: `bundle exec kitchen destroy` in order to destroy the created kitchen environment
+- Type: `bundle exec kitchen test` in order to do steps from 3 to 5 in one command
+
+## Kitchen results
+The test shows that the output for external ip is **not empty** and **not 127.0.0.1**
+```
+Target:  local://
+
+  ✔  check_output: x.x.x.x
+     ✔  x.x.x.x should not eq ""
+     ✔  x.x.x.x should not eq "127.0.0.1"
+
+
+Profile Summary: 1 successful control, 0 control failures, 0 controls skipped
+Test Summary: 2 successful, 0 failures, 0 skipped
+```
+Where **x.x.x.x** will be your external IP address
+
+
 ## TODO
-Kitchen test need to be prepared for this repo.
